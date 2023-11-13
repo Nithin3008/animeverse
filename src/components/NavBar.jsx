@@ -29,7 +29,7 @@ const NavBar = () => {
       </div>
       <div
         onClick={() => nav(`/Profile/${loggedInUser._id}`)}
-        className="flex gap-2 py-2 mb-8 hover:cursor-pointer"
+        className="flex gap-2 py-2 mb-1 hover:cursor-pointer"
       >
         <img
           className="rounded-full h-12 w-12 object-fit"
