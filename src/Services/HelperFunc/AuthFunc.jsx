@@ -26,7 +26,6 @@ export function AuthProvider({ children }) {
         username: userName,
         password: pwd,
       });
-      console.log(response.data.foundUser);
       if (response.status === 200) {
         localStorage.setItem("loginToken", response.data.encodedToken);
         toast.success("Welcome Back", {
@@ -58,7 +57,6 @@ export function AuthProvider({ children }) {
         username: event.target.username.value,
         password: event.target.pwd.value,
       });
-      console.log(response.data);
       if (response.status === 201) {
         toast.success(`Welcome ${details.fName}`, {
           position: "top-center",
@@ -72,6 +70,7 @@ export function AuthProvider({ children }) {
   };
   function logoutFun() {
     localStorage.clear();
+    dispatcherMain({ type: "Logout" });
     toast.success(`Bye Bye`, {
       position: "top-center",
     });
