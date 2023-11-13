@@ -4,10 +4,12 @@ import Modal from "./Modal";
 import EditProfile from "./EditProfile";
 import { followersExist } from "../Services/HelperFunc/UsersFunc";
 import { setFollow, setUnFollow } from "../Services/HelperFunc/FollowFunc";
+import { AuthContext } from "../Services/HelperFunc/AuthFunc";
 
 const ProfileSec = ({ data }) => {
   const { loggedInUser, Posts, loggedInUserFollwers, dispatcherMain } =
     useContext(DataContext);
+  const { logoutFun } = useContext(AuthContext);
   const profileData =
     loggedInUser.username === data.username ? { ...loggedInUser } : { ...data };
   const posts = [...Posts].filter(
@@ -52,12 +54,20 @@ const ProfileSec = ({ data }) => {
         </div>
         <div>
           {loggedInUser.username === profileData.username ? (
-            <button
-              className="text-lg text-white bg-black p-1 rounded-md"
-              onClick={() => setEdit(!showEdit)}
-            >
-              Edit Profile
-            </button>
+            <div className="flex flex-col gap-3">
+              <button
+                className="text-lg text-white bg-black px-2 py-1 rounded-md"
+                onClick={() => setEdit(!showEdit)}
+              >
+                Edit Profile
+              </button>
+              <button
+                onClick={() => logoutFun()}
+                className="text-lg text-white p-1 bg-red-500 rounded-md"
+              >
+                Logout
+              </button>
+            </div>
           ) : (
             <button
               onClick={() =>
