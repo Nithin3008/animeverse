@@ -3,10 +3,12 @@ import { DataContext } from "../Services/Context/DataProvider";
 import { setFollow, setUnFollow } from "../Services/HelperFunc/FollowFunc";
 import { followersExist } from "../Services/HelperFunc/UsersFunc";
 import { useNavigate } from "react-router-dom";
+import { AuthContext } from "../Services/HelperFunc/AuthFunc";
 export default function SuggestedFollowers() {
   const { Users, loggedInUser, loggedInUserFollwers, dispatcherMain } =
     useContext(DataContext);
   const nav = useNavigate();
+  const { logoutFun } = useContext(AuthContext);
   const suggestedUsersList = [...Users].filter(
     (val) => val.username !== loggedInUser.username
   );
@@ -51,6 +53,14 @@ export default function SuggestedFollowers() {
           </li>
         ))}
       </ul>
+      <div className="text-center">
+        <button
+          onClick={() => logoutFun()}
+          className="text-lg bg-red-500 p-2 text-white rounded-md"
+        >
+          Logout
+        </button>
+      </div>
     </div>
   );
 }
