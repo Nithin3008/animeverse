@@ -76,6 +76,7 @@ export function DataProvider({ children }) {
       case "setUserDetails":
         return {
           ...state,
+          isLoggedin: true,
           loggedInUser: {
             ...action.payload,
           },
@@ -85,12 +86,20 @@ export function DataProvider({ children }) {
 
       case "AddBookmarks":
         return { ...state, bookmarks: action.payload };
-
+      case "Logout":
+        return {
+          ...state,
+          isLoggedin: false,
+          loggedInUser: {},
+          bookmarks: [],
+          followers: [],
+          following: [],
+        };
       default:
         return state;
     }
   }
-  console.log(state.loggedInUser);
+  console.log(state);
   return (
     <>
       <DataContext.Provider
@@ -101,6 +110,7 @@ export function DataProvider({ children }) {
           loggedInUser: state.loggedInUser,
           loggedInUserFollwers: state.following,
           BookMarks: state.bookmarks,
+          isLoggedin: state.isLoggedin,
         }}
       >
         {children}
