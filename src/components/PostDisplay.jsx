@@ -100,7 +100,13 @@ const PostDisplay = ({ data, Users }) => {
               }
             >
               {checkLikes(Posts, loggedInUser).includes(data._id) ? (
-                <FontAwesomeIcon icon={farHeart} style={{ color: "#e90c0c" }} />
+                <>
+                  <FontAwesomeIcon
+                    icon={farHeart}
+                    style={{ color: "#e90c0c" }}
+                  />
+                  <span className="p-1">{data.likes.likeCount}</span>
+                </>
               ) : (
                 <FontAwesomeIcon icon={faHeart} style={{ color: "#e90c0c" }} />
               )}
