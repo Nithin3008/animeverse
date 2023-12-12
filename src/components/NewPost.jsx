@@ -21,7 +21,7 @@ const NewPost = () => {
         {newPostData.img && (
           <>
             <img
-              className="h-44 w-full object-contain"
+              className="h-44 w-full object-contain mb-6 rounded-md"
               src={URL.createObjectURL(newPostData.img)}
               alt="newImage"
             ></img>
@@ -56,7 +56,10 @@ const NewPost = () => {
           ></input>
         </label>
         <button
-          onClick={() => uploadNewPost(dispatcherMain, newPostData)}
+          onClick={() => {
+            uploadNewPost(dispatcherMain, newPostData);
+            setNewPostData({ img: "", content: "" });
+          }}
           className="text-lg bg-blue-500 text-white  p-1 px-2 rounded-md"
         >
           Post
