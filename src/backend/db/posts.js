@@ -183,4 +183,21 @@ export const posts = [
     followers: [],
     img: "https://github.com/Nithin3008/social_media_proj/blob/master/public/images/Gojo.jpg?raw=true",
   },
+  {
+    _id: uuid(),
+    content: "Finaaly the Attack on titan ends😭😭😭😭😭",
+    likes: {
+      likeCount: 0,
+      likedBy: [],
+      dislikedBy: [],
+    },
+    firstName: "Naruto",
+    username: "narutoUzumaki",
+    createdAt: new Date("2023-12-12"),
+    updatedAt: formatDate(),
+    comment: [],
+    following: [],
+    followers: [],
+    img: "",
+  },
 ];
