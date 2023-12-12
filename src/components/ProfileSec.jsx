@@ -21,7 +21,7 @@ const ProfileSec = ({ data }) => {
   }
   return (
     <>
-      <div className="flex items-center justify-between p-3 mt-14">
+      <div className="flex items-center justify-between p-3 pt-14 bg-amber-50">
         <div>
           {profileData.avatar ? (
             <img
