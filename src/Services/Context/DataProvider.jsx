@@ -99,7 +99,6 @@ export function DataProvider({ children }) {
     initialUsers();
     initialPosts();
     initialBookmarks();
-    console.log("useEffect executed");
   }, [state.loggedInUser]);
   return (
     <>
