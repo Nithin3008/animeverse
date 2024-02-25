@@ -105,11 +105,11 @@ const PostDisplay = ({ data, Users }) => {
                     icon={farHeart}
                     style={{ color: "#e90c0c" }}
                   />
-                  <span className="p-1">{data.likes.likeCount}</span>
                 </>
               ) : (
                 <FontAwesomeIcon icon={faHeart} style={{ color: "#e90c0c" }} />
               )}
+              <span className="p-1">{data.likes.likeCount}</span>
             </span>
             <span
               onClick={() =>
