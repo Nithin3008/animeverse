@@ -3,8 +3,8 @@ import axios from "axios";
 const encodedToken = localStorage.getItem("loginToken");
 
 export function followersExist(loggedInUserFollwers, userId) {
-  const check = loggedInUserFollwers.find((user) => user._id === userId);
-  return check === undefined ? false : true;
+  const check = loggedInUserFollwers.includes(userId);
+  return check;
 }
 export const dpData = [
   "https://github.com/Nithin3008/social_media_proj/blob/master/public/images/dp1.jpeg?raw=true",
@@ -46,8 +46,8 @@ export const editUser = async (dispatcherMain, newDetails) => {
   try {
     console.log(newDetails);
     const response = await axios.post(
-      `/api/users/edit`,
-      { userData: newDetails },
+      `https://animebackend.onrender.com/animeverse/users/editUser`,
+      { ...newDetails },
       {
         headers: {
           authorization: encodedToken,

@@ -8,7 +8,7 @@ export const setFollow = async (dispatcherMain, followUserId) => {
   console.log(dispatcherMain, followUserId);
   try {
     const response = await axios.post(
-      `/api/users/follow/${followUserId}`,
+      `https://animebackend.onrender.com/animeverse/users/followUser/${followUserId}`,
       {},
       {
         headers: {
@@ -21,11 +21,9 @@ export const setFollow = async (dispatcherMain, followUserId) => {
         position: "top-center",
       });
     }
-
-    dispatcherMain({ type: "userDetails", payload: response.data.user });
     dispatcherMain({
       type: "AddFollowing",
-      payload: response.data.user.following,
+      payload: response.data.user.followers,
     });
   } catch (error) {
     console.log(error);
@@ -35,7 +33,7 @@ export const setFollow = async (dispatcherMain, followUserId) => {
 export const setUnFollow = async (dispatcherMain, followUserId) => {
   try {
     const response = await axios.post(
-      `/api/users/unfollow/${followUserId}`,
+      `https://animebackend.onrender.com/animeverse/users/unFollowUser/${followUserId}`,
       {},
       {
         headers: {
@@ -48,11 +46,9 @@ export const setUnFollow = async (dispatcherMain, followUserId) => {
         position: "top-center",
       });
     }
-
-    dispatcherMain({ type: "userDetails", payload: response.data.user });
     dispatcherMain({
       type: "AddFollowing",
-      payload: response.data.user.following,
+      payload: response.data.user.followers,
     });
   } catch (error) {
     console.log(error);

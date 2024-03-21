@@ -3,26 +3,10 @@ import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 const encodedToken = localStorage.getItem("loginToken");
 
-export const initialBookmarks = async (dispatcherMain) => {
-  try {
-    const response = await axios.get("/api/users/bookmark", {
-      headers: {
-        authorization: encodedToken,
-      },
-    });
-
-    dispatcherMain({
-      type: "AddBookmarks",
-      payload: response.data.bookmarks,
-    });
-  } catch (error) {
-    console.log(error);
-  }
-};
 export async function addBookmark(dispatcherMain, postId) {
   try {
     const response = await axios.post(
-      `/api/users/bookmark/${postId}`,
+      `https://animebackend.onrender.com/animeverse/posts/addBookmark/${postId}`,
       {},
       {
         headers: {
@@ -30,7 +14,7 @@ export async function addBookmark(dispatcherMain, postId) {
         },
       }
     );
-    if (response.status === 200) {
+    if (response.status === 201) {
       toast.success(`Added post to Bookmark`, {
         position: "bottom-right",
       });
@@ -46,7 +30,7 @@ export async function addBookmark(dispatcherMain, postId) {
 export async function removeBookmark(dispatcherMain, postId) {
   try {
     const response = await axios.post(
-      `/api/users/remove-bookmark/${postId}`,
+      `https://animebackend.onrender.com/animeverse/posts/removeBookmark/${postId}`,
       {},
       {
         headers: {
@@ -55,7 +39,7 @@ export async function removeBookmark(dispatcherMain, postId) {
       }
     );
     console.log(response.status);
-    if (response.status === 200) {
+    if (response.status === 201) {
       toast.error(`Removed from Bookmark`, {
         position: "bottom-right",
       });

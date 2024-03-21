@@ -3,7 +3,7 @@ const encodedToken = localStorage.getItem("loginToken");
 export async function LikePosts(dispatcherMain, postId) {
   try {
     const response = await axios.post(
-      `/api/posts/like/${postId}`,
+      `https://animebackend.onrender.com/animeverse/posts/likePost/${postId}`,
       {},
       {
         headers: {
@@ -11,8 +11,8 @@ export async function LikePosts(dispatcherMain, postId) {
         },
       }
     );
-    if (response.status === 201) {
-      dispatcherMain({ type: "getPosts", payload: response.data.posts });
+    if (response.status === 200) {
+      dispatcherMain({ type: "getPosts", payload: response.data.getAllPosts });
     }
   } catch (error) {
     console.log(error);
@@ -21,7 +21,7 @@ export async function LikePosts(dispatcherMain, postId) {
 export async function unLikePosts(dispatcherMain, postId) {
   try {
     const response = await axios.post(
-      `/api/posts/dislike/${postId}`,
+      `https://animebackend.onrender.com/animeverse/posts/unlikePost/${postId}`,
       {},
       {
         headers: {
@@ -29,7 +29,7 @@ export async function unLikePosts(dispatcherMain, postId) {
         },
       }
     );
-    dispatcherMain({ type: "getPosts", payload: response.data.posts });
+    dispatcherMain({ type: "getPosts", payload: response.data.getAllPosts });
   } catch (error) {
     console.log(error);
   }
@@ -68,9 +68,9 @@ export async function uploadImage(newPostData) {
 async function createNewPost(dispatcherMain, newPostData) {
   try {
     const response = await axios.post(
-      "/api/posts",
+      "https://animebackend.onrender.com/animeverse/posts/create",
       {
-        postData: newPostData,
+        ...newPostData,
       },
       {
         headers: {
@@ -79,7 +79,7 @@ async function createNewPost(dispatcherMain, newPostData) {
       }
     );
     if (response.status === 201) {
-      dispatcherMain({ type: "getPosts", payload: response.data.posts });
+      dispatcherMain({ type: "getPosts", payload: response.data.getAllPosts });
       return response.data.posts;
     }
     console.log(response);
@@ -96,18 +96,17 @@ export async function uploadNewPost(dispatcherMain, post) {
 async function editPostOld(oldPostData, dispatcherMain) {
   try {
     const response = await axios.post(
-      `/api/posts/edit/${oldPostData._id}`,
-      { postData: oldPostData },
+      `https://animebackend.onrender.com/animeverse/posts/editPost`,
+      { ...oldPostData },
       {
         headers: {
           authorization: encodedToken,
         },
       }
     );
-    if (response.status === 201) {
-      dispatcherMain({ type: "getPosts", payload: response.data.posts });
+    if (response.status === 200) {
+      dispatcherMain({ type: "getPosts", payload: response.data.getAllPosts });
     }
-    console.log(response.data.posts);
   } catch (error) {
     console.log(error);
   }
@@ -115,20 +114,21 @@ async function editPostOld(oldPostData, dispatcherMain) {
 
 export async function editPostData(editPost, dispatcherMain) {
   const result1 = await uploadImage(editPost);
-  console.log(result1);
   editPostOld(result1, dispatcherMain);
 }
 
 export async function deletePost(dispatcherMain, postId) {
   try {
-    const response = await axios.delete(`/api/posts/${postId}`, {
-      headers: {
-        authorization: encodedToken,
-      },
-    });
-    console.log(response.data.posts);
-    if (response.status === 201) {
-      dispatcherMain({ type: "getPosts", payload: response.data.posts });
+    const response = await axios.delete(
+      `https://animebackend.onrender.com/animeverse/posts/deletePost/${postId}`,
+      {
+        headers: {
+          authorization: encodedToken,
+        },
+      }
+    );
+    if (response.status === 200) {
+      dispatcherMain({ type: "getPosts", payload: response.data.getAllPosts });
     }
   } catch (error) {
     console.log(error);
@@ -136,9 +136,7 @@ export async function deletePost(dispatcherMain, postId) {
 }
 export function checkLikes(Posts, loggedInUser) {
   const x = [...Posts]?.map((post) =>
-    post?.likes?.likedBy.find(
-      (user) => user.username === loggedInUser.username
-    ) === undefined
+    post?.likes?.likedBy.find((user) => user === loggedInUser._id) === undefined
       ? false
       : post._id
   );

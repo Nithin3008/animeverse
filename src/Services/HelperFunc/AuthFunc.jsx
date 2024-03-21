@@ -22,18 +22,21 @@ export function AuthProvider({ children }) {
     }
     console.log(userName, pwd);
     try {
-      const response = await axios.post(`/api/auth/login`, {
-        username: userName,
-        password: pwd,
-      });
+      const response = await axios.post(
+        `https://animebackend.onrender.com/animeverse/authy/signin`,
+        {
+          username: userName,
+          password: pwd,
+        }
+      );
       if (response.status === 200) {
-        localStorage.setItem("loginToken", response.data.encodedToken);
+        localStorage.setItem("loginToken", response.data.token);
         toast.success("Welcome Back", {
           position: "top-center",
         });
         dispatcherMain({
           type: "setUserDetails",
-          payload: response.data.foundUser,
+          payload: response.data.user,
         });
         return nav("/Home");
       }
@@ -51,12 +54,16 @@ export function AuthProvider({ children }) {
       username: event.target.username.value,
     };
     try {
-      const response = await axios.post(`/api/auth/signup`, {
-        firstName: event.target.fname.value,
-        lastName: event.target.lname.value,
-        username: event.target.username.value,
-        password: event.target.pwd.value,
-      });
+      const response = await axios.post(
+        `https://animebackend.onrender.com/animeverse/authy/signup`,
+        {
+          firstName: event.target.fname.value,
+          lastName: event.target.lname.value,
+          username: event.target.username.value,
+          password: event.target.pwd.value,
+        }
+      );
+      console.log(response);
       if (response.status === 201) {
         toast.success(`Welcome ${details.fName}`, {
           position: "top-center",

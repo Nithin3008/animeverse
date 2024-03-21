@@ -25,7 +25,7 @@ export function DataProvider({ children }) {
       case "userDetails":
         return {
           ...state,
-          bookmarks: action.payload.bookmarks,
+          bookmarks: action.payload.bookmark,
           followers: action.payload.followers,
           following: action.payload.following,
           loggedInUser: action.payload,
@@ -37,6 +37,7 @@ export function DataProvider({ children }) {
           loggedInUser: {
             ...action.payload,
           },
+          bookmarks: action.payload.bookmark,
         };
       case "AddFollowing":
         return { ...state, following: action.payload };
@@ -59,46 +60,27 @@ export function DataProvider({ children }) {
   console.log(state);
   const encodedToken = localStorage.getItem("loginToken");
   const initialData = async () => {
-    const response = await axios.get(`/api/posts`);
+    const response = await axios.get(
+      `https://animebackend.onrender.com/animeverse/posts`,
+      {
+        headers: { Authorization: encodedToken },
+      }
+    );
     dispatcherMain({ type: "getPosts", payload: response.data.posts });
   };
   const initialUsers = async () => {
-    const resUsers = await axios.get("/api/users");
+    const resUsers = await axios.get(
+      "https://animebackend.onrender.com/animeverse/users/allUsers",
+      {
+        headers: { Authorization: encodedToken },
+      }
+    );
     dispatcherMain({ type: "getUsers", payload: resUsers.data.users });
   };
-  const initialPosts = async () => {
-    try {
-      const response = await axios.get(`/api/posts`);
 
-      if (response.status === 200) {
-        console.log(response.data.posts);
-        dispatcherMain({ type: "getPosts", payload: response.data.posts });
-      }
-    } catch (error) {
-      console.log(error);
-    }
-  };
-  const initialBookmarks = async () => {
-    try {
-      const response = await axios.get("/api/users/bookmark", {
-        headers: {
-          authorization: encodedToken,
-        },
-      });
-
-      dispatcherMain({
-        type: "AddBookmarks",
-        payload: response.data.bookmarks,
-      });
-    } catch (error) {
-      console.log(error);
-    }
-  };
   useEffect(() => {
     initialData();
     initialUsers();
-    initialPosts();
-    initialBookmarks();
   }, [state.loggedInUser]);
   return (
     <>
