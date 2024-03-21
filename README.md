@@ -5,7 +5,7 @@ A Social media app for anime lovers.
 ## Techonlogies Used
 
 ---
-
+# Frontend
 - React Js(useReducer,useContext).
 - React Router 6.
 - Tailwind css.
@@ -13,6 +13,17 @@ A Social media app for anime lovers.
 - Aos for animations.
 - Cloudinary for Image and Video Storage.
 - Netlify for Deployment.
+  
+# Backend
+- Typescript
+- NodeJs
+- Express Js
+- zod
+- jwttoken
+- dotenv
+- cors
+- bcrypt
+- render for deployement
 
 ---
 
@@ -42,6 +53,9 @@ A Social media app for anime lovers.
 
 ## Demo Link
 https://superb-lily-395896.netlify.app/
+
+# Backend Repo Link
+https://github.com/Nithin3008/animeBackend
 
 
 
